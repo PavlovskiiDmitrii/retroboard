@@ -18,6 +18,12 @@ class RoomController {
         res.json(rooms.rows);
     }
 
+    async addClientToRoom(req : any, res: any) {
+        const {room_id, clientsId} = req.body;
+        const room = await db.pool.query(`UPDATE room set clients_id = $1 where room_id = $2 RETURNING *`, [clientsId, room_id]);
+        res.json(room.rows);
+    }
+
     async deleteRoom(req : any, res: any) {
         const id = req.params.id;
         const room = await db.pool.query('DELETE FROM room where room_id = $1', [id]);

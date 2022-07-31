@@ -9,6 +9,7 @@ CREATE TABLE client(
 CREATE TABLE room(
   room_id SERIAL PRIMARY KEY,
   owner_id INTEGER NOT NULL,
+  clients_id INTEGER[],
   title VARCHAR(64),
   FOREIGN KEY (owner_id) REFERENCES client (id)
 );
