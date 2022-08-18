@@ -3,8 +3,11 @@ import 'dotenv/config';
 import userRouter from './routes/user.routes';
 import roomRouter from './routes/room.routes';
 import authRouter from './routes/auth.routes';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.json())
 app.use('/api', userRouter);

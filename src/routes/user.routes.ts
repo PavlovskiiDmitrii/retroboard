@@ -7,6 +7,7 @@ const mainMiddleware = [verifyToken];
 let userRouter = express.Router();
 
 userRouter.get('/user', mainMiddleware, userController.getUsers);
+userRouter.post('/check', mainMiddleware, userController.getUsersCheck);
 userRouter.get('/user/:id', mainMiddleware, userController.getOneUser);
 userRouter.put('/user', mainMiddleware, userController.updateUser);
 userRouter.delete('/user/:id', mainMiddleware, userController.deleteUser);

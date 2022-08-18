@@ -6,6 +6,7 @@ import { authConfig }  from "../config/auth.config";
 class AuthController {
     async signup (req : any, res: any) {
         const {name, role, email, password} = req.body;
+        console.log('signup')
         try {
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(password, salt, function(err, hash) {
@@ -22,6 +23,7 @@ class AuthController {
     }
     async signin (req : any, res: any) {
         const {email, password} = req.body;
+        console.log('signin')
         try {
             const {rows} = await db.pool.query('SELECT * from client where email = $1', [email]);
             if (!rows[0]) {
