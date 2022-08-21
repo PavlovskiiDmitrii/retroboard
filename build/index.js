@@ -8,6 +8,7 @@ require("dotenv/config");
 var user_routes_1 = __importDefault(require("./routes/user.routes"));
 var room_routes_1 = __importDefault(require("./routes/room.routes"));
 var auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+var group_routes_1 = __importDefault(require("./routes/group.routes"));
 var cors_1 = __importDefault(require("cors"));
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -15,6 +16,7 @@ app.use(express_1.default.json());
 app.use('/api', user_routes_1.default);
 app.use('/api', room_routes_1.default);
 app.use('/api', auth_routes_1.default);
+app.use('/api', group_routes_1.default);
 app.get('/', function (req, res) {
     res.send('Well doddne!');
 });

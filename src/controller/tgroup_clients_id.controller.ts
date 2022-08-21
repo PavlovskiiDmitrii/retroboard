@@ -10,16 +10,21 @@ class Group_clients_idController {
             res.status(500).send(`Пользователь уже состоит в группе`);
         }
     }
-
+    async getGroupsByClientId(req : any, res: any) {
+        const client_id = req.query.client_id;
+        const groups = await db.pool.query('SELECT * from tgroup where owner_id = $1', [client_id]);
+        res.json(groups.rows);
+    }
     async getClientsByGroupId(req : any, res: any) {
         const tgroup_id = req.query.tgroup_id;
         const clients = await db.pool.query('SELECT * from tgroup_clients_id where tgroup_id = $1', [tgroup_id]);
         res.json(clients.rows.map(client => (client.client_id)));
     }
-    async getGroupsByClientId(req : any, res: any) {
+    // НЕ ПОНЯТНО ЗАЧЕМ НУЖНО
+    async getGroupsIdByClientId(req : any, res: any) {
         const client_id = req.query.client_id;
-        const groups = await db.pool.query('SELECT * from tgroup_clients_id where client_id = $1', [client_id]);
-        res.json(groups.rows.map(groups => (groups.tgroup_id)));
+        const groupsId = await db.pool.query('SELECT * from tgroup_clients_id where client_id = $1', [client_id]);
+        res.json(groupsId.rows.map(groups => (groups.tgroup_id)));
     }
 }
 

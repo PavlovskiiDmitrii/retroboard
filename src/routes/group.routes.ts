@@ -17,6 +17,7 @@ groupRouter.post('/group', mainMiddleware, groupController.createGroup);
 
 groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, group_clients_idController.createConnectionGroupWithClient);
 groupRouter.get('/clientsby', mainMiddleware, group_clients_idController.getClientsByGroupId);
+groupRouter.get('/groupsIdby', mainMiddleware, group_clients_idController.getGroupsIdByClientId);
 groupRouter.get('/groupsby', mainMiddleware, group_clients_idController.getGroupsByClientId);
 
 
