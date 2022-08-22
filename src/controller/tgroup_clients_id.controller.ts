@@ -7,13 +7,8 @@ class Group_clients_idController {
             const newConnectionGroupWithClient = await db.pool.query(`INSERT INTO tgroup_clients_id (client_id, tgroup_id) values ($1, $2) RETURNING *`, [client_id, group_id]);
             res.json(newConnectionGroupWithClient.rows);
         } catch (error) {
-            res.status(500).send(`Пользователь уже состоит в группе`);
+            res.status(500).send({message: `Пользователь уже состоит в группе`, error: error});
         }
-    }
-    async getGroupsByClientId(req : any, res: any) {
-        const client_id = req.query.client_id;
-        const groups = await db.pool.query('SELECT * from tgroup where owner_id = $1', [client_id]);
-        res.json(groups.rows);
     }
     async getClientsByGroupId(req : any, res: any) {
         const tgroup_id = req.query.tgroup_id;
