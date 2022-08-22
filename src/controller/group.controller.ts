@@ -15,9 +15,14 @@ class GroupController {
   }
   async getGroupsByClientId(req: any, res: any) {
     const client_id = req.query.client_id;
-    const groups = await db.pool.query(
-      "SELECT * from tgroup where owner_id = $1",
+    const groupsIdRow = await db.pool.query(
+      "SELECT * from tgroup_clients_id where client_id = $1",
       [client_id]
+    );
+    const groupsId = groupsIdRow.rows.map((row) => (row.tgroup_id));
+    const groups = await db.pool.query(
+      "SELECT * from tgroup where id = ANY ($1)",
+      [groupsId]
     );
     res.json(groups.rows);
   }

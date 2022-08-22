@@ -7,11 +7,17 @@ CREATE TABLE client(
 );
 
 CREATE TABLE room(
-  room_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   owner_id INTEGER NOT NULL,
-  clients_id INTEGER[],
   title VARCHAR(64),
   FOREIGN KEY (owner_id) REFERENCES client(id)
+);
+
+CREATE TABLE room_clients_id (
+    id SERIAL PRIMARY KEY,
+    client_id INTEGER NOT NULL REFERENCES client(id),
+    room_id INTEGER NOT NULL REFERENCES room(id),
+    UNIQUE (client_id, room_id)
 );
 
 CREATE TABLE tgroup(

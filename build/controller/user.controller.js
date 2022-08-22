@@ -75,7 +75,7 @@ var UserController = /** @class */ (function () {
                         }
                         hash = rows[0].password;
                         if (password === hash) {
-                            res.status(200).json({ message: 'OK' });
+                            res.status(200).json({ my: rows[0], message: 'OK' });
                         }
                         else {
                             res.status(401).json('Пароль не правильный');

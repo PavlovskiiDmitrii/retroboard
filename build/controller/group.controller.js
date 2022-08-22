@@ -46,7 +46,7 @@ var GroupController = /** @class */ (function () {
     }
     GroupController.prototype.createGroup = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, title, owner_id, newGroup;
+            var _a, title, owner_id, newGroup, _;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -55,6 +55,44 @@ var GroupController = /** @class */ (function () {
                     case 1:
                         newGroup = _b.sent();
                         res.json(newGroup.rows);
+                        return [4 /*yield*/, db_1.default.pool.query("INSERT INTO tgroup_clients_id (client_id, tgroup_id) values ($1, $2) RETURNING *", [owner_id, newGroup.rows[0].id])];
+                    case 2:
+                        _ = _b.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GroupController.prototype.getGroupsByClientId = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var client_id, groups;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        client_id = req.query.client_id;
+                        return [4 /*yield*/, db_1.default.pool.query("SELECT * from tgroup where owner_id = $1", [client_id])];
+                    case 1:
+                        groups = _a.sent();
+                        res.json(groups.rows);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GroupController.prototype.deleteGroup = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, _, tgroup;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.query.id;
+                        return [4 /*yield*/, db_1.default.pool.query("DELETE FROM tgroup_clients_id where tgroup_id = $1", [id])];
+                    case 1:
+                        _ = _a.sent();
+                        return [4 /*yield*/, db_1.default.pool.query("DELETE FROM tgroup where id = $1 RETURNING *", [id])];
+                    case 2:
+                        tgroup = _a.sent();
+                        res.json(tgroup.rows);
                         return [2 /*return*/];
                 }
             });

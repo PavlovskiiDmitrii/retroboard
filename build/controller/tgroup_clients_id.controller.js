@@ -61,7 +61,7 @@ var Group_clients_idController = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _b.sent();
-                        res.status(500).send("\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0443\u0436\u0435 \u0441\u043E\u0441\u0442\u043E\u0438\u0442 \u0432 \u0433\u0440\u0443\u043F\u043F\u0435");
+                        res.status(500).send({ message: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0443\u0436\u0435 \u0441\u043E\u0441\u0442\u043E\u0438\u0442 \u0432 \u0433\u0440\u0443\u043F\u043F\u0435", error: error_1 });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -84,17 +84,18 @@ var Group_clients_idController = /** @class */ (function () {
             });
         });
     };
-    Group_clients_idController.prototype.getGroupsByClientId = function (req, res) {
+    // НЕ ПОНЯТНО ЗАЧЕМ НУЖНО
+    Group_clients_idController.prototype.getGroupsIdByClientId = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var client_id, groups;
+            var client_id, groupsId;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         client_id = req.query.client_id;
                         return [4 /*yield*/, db_1.default.pool.query('SELECT * from tgroup_clients_id where client_id = $1', [client_id])];
                     case 1:
-                        groups = _a.sent();
-                        res.json(groups.rows.map(function (groups) { return (groups.tgroup_id); }));
+                        groupsId = _a.sent();
+                        res.json(groupsId.rows.map(function (groups) { return (groups.tgroup_id); }));
                         return [2 /*return*/];
                 }
             });

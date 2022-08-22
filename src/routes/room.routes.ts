@@ -7,10 +7,10 @@ let roomRouter = express.Router();
 const mainMiddleware = [verifyToken];
 
 roomRouter.post('/room', mainMiddleware, roomController.createRoom);
-roomRouter.put('/room/addclient', mainMiddleware, roomController.addClientToRoom);
+roomRouter.post('/room/addclient', mainMiddleware, roomController.addClientToRoom);
 roomRouter.get('/room/:id', mainMiddleware, roomController.getRoom);
 roomRouter.get('/rooms/', mainMiddleware, roomController.getRoomByAdmin);
-roomRouter.delete('/room/:id', mainMiddleware, roomController.deleteRoom);
+roomRouter.delete('/room/', mainMiddleware, roomController.deleteRoom);
 
 
 export default roomRouter;

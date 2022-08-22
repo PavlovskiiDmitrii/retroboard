@@ -16,9 +16,9 @@ groupRouter.delete('/group/', mainMiddleware, groupController.deleteGroup);
 
 
 
-groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, group_clients_idController.createConnectionGroupWithClient);
+groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, group_clients_idController.addClientToGroup);
 groupRouter.get('/clientsby', mainMiddleware, group_clients_idController.getClientsByGroupId);
-groupRouter.get('/groupsIdby', mainMiddleware, group_clients_idController.getGroupsIdByClientId);
+// groupRouter.get('/groupsIdby', mainMiddleware, group_clients_idController.getGroupsIdByClientId);
 
 
 export default groupRouter;
