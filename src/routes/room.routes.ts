@@ -9,7 +9,7 @@ const mainMiddleware = [verifyToken];
 roomRouter.post('/room', mainMiddleware, roomController.createRoom);
 roomRouter.post('/room/addclient', mainMiddleware, roomController.addClientToRoom);
 roomRouter.get('/room/:id', mainMiddleware, roomController.getRoom);
-roomRouter.get('/rooms/', mainMiddleware, roomController.getRoomByAdmin);
+roomRouter.get('/rooms/', mainMiddleware, roomController.getRoomsByClientId);
 roomRouter.delete('/room/', mainMiddleware, roomController.deleteRoom);
 
 

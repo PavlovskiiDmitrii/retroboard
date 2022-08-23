@@ -44,12 +44,6 @@ class GroupController {
   //     res.json(room.rows);
   // }
 
-  // async getRoomByAdmin(req : any, res: any) {
-  //     const id = req.query.id;
-  //     const rooms = await db.pool.query('SELECT * from room where owner_id = $1', [id]);
-  //     res.json(rooms.rows);
-  // }
-
   // async addClientToRoom(req : any, res: any) {
   //     const {room_id, clientsId} = req.body;
   //     const room = await db.pool.query(`UPDATE room set clients_id = $1 where room_id = $2 RETURNING *`, [clientsId, room_id]);

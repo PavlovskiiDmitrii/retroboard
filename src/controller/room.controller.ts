@@ -12,9 +12,14 @@ class RoomController {
         const room = await db.pool.query('SELECT * from room where room_id = $1', [id]);
         res.json(room.rows);
     }
-    async getRoomByAdmin(req : any, res: any) {
+    async getRoomsByClientId(req : any, res: any) {
         const id = req.query.id;
-        const rooms = await db.pool.query('SELECT * from room where owner_id = $1', [id]);
+        const roomIdRow = await db.pool.query(
+            "SELECT * from room_clients_id where client_id = $1",
+            [id]
+          );
+        const roomsId = roomIdRow.rows.map((row) => (row.room_id));
+        const rooms = await db.pool.query("SELECT * from room where id = ANY ($1)", [roomsId]);
         res.json(rooms.rows);
     }
     async addClientToRoom(req : any, res: any) {
