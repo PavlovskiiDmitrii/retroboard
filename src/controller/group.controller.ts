@@ -3,11 +3,16 @@ import db from "../db/db";
 class GroupController {
   async createGroup(req: any, res: any) {
     const { title, owner_id } = req.body;
+    const owner = await db.pool.query(
+      "SELECT * from client where id = $1",
+      [owner_id]
+    );
     const newGroup = await db.pool.query(
       `INSERT INTO tgroup (title, owner_id) values ($1, $2) RETURNING *`,
       [title, owner_id]
     );
-    res.json(newGroup.rows);
+    newGroup.rows[0].clients = [owner.rows[0]];
+    res.json( newGroup.rows[0]);
     const _ = await db.pool.query(
       `INSERT INTO tgroup_clients_id (client_id, tgroup_id) values ($1, $2) RETURNING *`,
       [owner_id, newGroup.rows[0].id]
@@ -24,7 +29,20 @@ class GroupController {
       "SELECT * from tgroup where id = ANY ($1)",
       [groupsId]
     );
-    res.json(groups.rows);
+    const groupsMap = groups.rows.map((group) => (
+      {...group, clients : []}
+    ));
+
+    for (let i = 0; i < groupsMap.length; i++) {
+      const groupLocal = await db.pool.query("SELECT * from tgroup_clients_id where tgroup_id = $1", [groupsMap[i].id]);
+      const clients = await db.pool.query("SELECT * from client where id = ANY ($1)", [groupLocal.rows.map((group) => (group.client_id))]);
+      const clientsMap = clients.rows.map((client) => {
+        delete client.password;
+        return client;
+      })
+      groupsMap.find((group) => group.id === groupsMap[i].id).clients.push(...clientsMap);
+    }
+    res.json(groupsMap);
   }
   async deleteGroup(req: any, res: any) {
     const id = req.query.id;
