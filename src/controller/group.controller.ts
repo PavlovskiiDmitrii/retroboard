@@ -56,6 +56,15 @@ class GroupController {
     );
     res.json(tgroup.rows);
   }
+  async deleteClientFromGroup(req: any, res: any) {
+    const client_id = req.query.client_id;
+    const tgroup_id = req.query.tgroup_id;
+    const _ = await db.pool.query(
+      "DELETE FROM tgroup_clients_id where tgroup_id = $1 AND client_id = $2",
+      [tgroup_id, client_id]
+    );
+    res.json({message: 'Пользователь удалён из группы'});
+  }
   // async getRoom(req : any, res: any) {
   //     const id = req.params.id;
   //     const room = await db.pool.query('SELECT * from room where room_id = $1', [id]);

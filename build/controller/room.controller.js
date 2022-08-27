@@ -46,7 +46,7 @@ var RoomController = /** @class */ (function () {
     }
     RoomController.prototype.createRoom = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, owner_id, title, newRoom;
+            var _a, owner_id, title, newRoom, _;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -55,6 +55,9 @@ var RoomController = /** @class */ (function () {
                     case 1:
                         newRoom = _b.sent();
                         res.json(newRoom.rows);
+                        return [4 /*yield*/, db_1.default.pool.query("INSERT INTO room_clients_id ( client_id, room_id) values ($1, $2) RETURNING *", [owner_id, newRoom.rows[0].id])];
+                    case 2:
+                        _ = _b.sent();
                         return [2 /*return*/];
                 }
             });
@@ -76,15 +79,19 @@ var RoomController = /** @class */ (function () {
             });
         });
     };
-    RoomController.prototype.getRoomByAdmin = function (req, res) {
+    RoomController.prototype.getRoomsByClientId = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, rooms;
+            var id, roomIdRow, roomsId, rooms;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = req.query.id;
-                        return [4 /*yield*/, db_1.default.pool.query('SELECT * from room where owner_id = $1', [id])];
+                        return [4 /*yield*/, db_1.default.pool.query("SELECT * from room_clients_id where client_id = $1", [id])];
                     case 1:
+                        roomIdRow = _a.sent();
+                        roomsId = roomIdRow.rows.map(function (row) { return (row.room_id); });
+                        return [4 /*yield*/, db_1.default.pool.query("SELECT * from room where id = ANY ($1)", [roomsId])];
+                    case 2:
                         rooms = _a.sent();
                         res.json(rooms.rows);
                         return [2 /*return*/];
@@ -99,7 +106,7 @@ var RoomController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = req.body, room_id = _a.room_id, clientsId = _a.clientsId;
-                        return [4 /*yield*/, db_1.default.pool.query("UPDATE room set clients_id = $1 where room_id = $2 RETURNING *", [clientsId, room_id])];
+                        return [4 /*yield*/, db_1.default.pool.query("INSERT INTO room_clients_id (client_id, room_id) values ($1, $2) RETURNING *", [clientsId, room_id])];
                     case 1:
                         room = _b.sent();
                         res.json(room.rows);
@@ -114,8 +121,8 @@ var RoomController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        id = req.params.id;
-                        return [4 /*yield*/, db_1.default.pool.query('DELETE FROM room where room_id = $1', [id])];
+                        id = req.query.id;
+                        return [4 /*yield*/, db_1.default.pool.query('DELETE FROM room where room_id = $1 RETURNING *', [id])];
                     case 1:
                         room = _a.sent();
                         res.json(room.rows);

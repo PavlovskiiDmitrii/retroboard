@@ -44,7 +44,7 @@ var db_1 = __importDefault(require("../db/db"));
 var Group_clients_idController = /** @class */ (function () {
     function Group_clients_idController() {
     }
-    Group_clients_idController.prototype.createConnectionGroupWithClient = function (req, res) {
+    Group_clients_idController.prototype.addClientToGroup = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, group_id, client_id, newConnectionGroupWithClient, error_1;
             return __generator(this, function (_b) {
@@ -79,23 +79,6 @@ var Group_clients_idController = /** @class */ (function () {
                     case 1:
                         clients = _a.sent();
                         res.json(clients.rows.map(function (client) { return (client.client_id); }));
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    // НЕ ПОНЯТНО ЗАЧЕМ НУЖНО
-    Group_clients_idController.prototype.getGroupsIdByClientId = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var client_id, groupsId;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        client_id = req.query.client_id;
-                        return [4 /*yield*/, db_1.default.pool.query('SELECT * from tgroup_clients_id where client_id = $1', [client_id])];
-                    case 1:
-                        groupsId = _a.sent();
-                        res.json(groupsId.rows.map(function (groups) { return (groups.tgroup_id); }));
                         return [2 /*return*/];
                 }
             });

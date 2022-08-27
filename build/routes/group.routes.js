@@ -33,9 +33,8 @@ groupRouter.post('/group', mainMiddleware, group_controller_1.groupController.cr
 groupRouter.get('/groupsby', mainMiddleware, group_controller_1.groupController.getGroupsByClientId);
 // roomRouter.put('/room/addclient', mainMiddleware, roomController.addClientToRoom);
 // roomRouter.get('/group/:id', mainMiddleware, roomController.getRoom);
-// roomRouter.get('/rooms/', mainMiddleware, roomController.getRoomByAdmin);
 groupRouter.delete('/group/', mainMiddleware, group_controller_1.groupController.deleteGroup);
-groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, tgroup_clients_id_controller_1.group_clients_idController.createConnectionGroupWithClient);
+groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, tgroup_clients_id_controller_1.group_clients_idController.addClientToGroup);
 groupRouter.get('/clientsby', mainMiddleware, tgroup_clients_id_controller_1.group_clients_idController.getClientsByGroupId);
-groupRouter.get('/groupsIdby', mainMiddleware, tgroup_clients_id_controller_1.group_clients_idController.getGroupsIdByClientId);
+// groupRouter.get('/groupsIdby', mainMiddleware, group_clients_idController.getGroupsIdByClientId);
 exports.default = groupRouter;

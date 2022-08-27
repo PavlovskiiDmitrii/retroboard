@@ -12,6 +12,7 @@ groupRouter.get('/groupsby', mainMiddleware, groupController.getGroupsByClientId
 // roomRouter.put('/room/addclient', mainMiddleware, roomController.addClientToRoom);
 // roomRouter.get('/group/:id', mainMiddleware, roomController.getRoom);
 groupRouter.delete('/group/', mainMiddleware, groupController.deleteGroup);
+groupRouter.delete('/deleteclientfromgroup/', mainMiddleware, groupController.deleteClientFromGroup);
 
 
 groupRouter.post('/createconnectionfroupwithclient', mainMiddleware, group_clients_idController.addClientToGroup);
