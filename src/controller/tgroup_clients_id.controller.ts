@@ -2,10 +2,16 @@ import db from '../db/db';
 
 class Group_clients_idController {
     async addClientToGroup(req : any, res: any) {
-        const {group_id, client_id} = req.body;
+        const {group_id, email} = req.body;
         try {
-            const newConnectionGroupWithClient = await db.pool.query(`INSERT INTO tgroup_clients_id (client_id, tgroup_id) values ($1, $2) RETURNING *`, [client_id, group_id]);
-            res.json(newConnectionGroupWithClient.rows);
+            const addingUser = await db.pool.query(`SELECT * from client where email = $1`, [email]);
+            const _ = await db.pool.query(`INSERT INTO tgroup_clients_id (client_id, tgroup_id) values ($1, $2) RETURNING *`, [addingUser.rows[0].id, group_id]);
+            res.json({
+                "id": addingUser.rows[0].id,
+                "name": addingUser.rows[0].name,
+                "role": addingUser.rows[0].role,
+                "email": addingUser.rows[0].email,
+            });
         } catch (error) {
             res.status(500).send({message: `Пользователь уже состоит в группе`, error: error});
         }
